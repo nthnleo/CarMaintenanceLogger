@@ -10,7 +10,7 @@ import Button from '../components/button';
 import Header from '../components/header';
 
 import Signup from './signup';
-import Account from './account';
+import Records from './records';
 
 import * as firebase from 'firebase';
 
@@ -26,19 +26,19 @@ export default class Login extends Component {
       loaded: true
     }
   }
+
   componentDidMount(){
     let flag = true;
     firebase.auth().onAuthStateChanged((user) => {
-    if (user && flag) {
-      console.log(firebase.auth().currentUser.email);
-      this.props.navigator.push({component: Account});
-      flag = false;
-    }
-  });
+      if (user && flag) {
+        console.log(firebase.auth().currentUser.email);
+        this.props.navigator.push({component: Records});
+        flag = false;
+      }
+    });
+  }
 
-}
   render() {
-    console.log('render')
     return (
       <TouchableWithoutFeedback onPress={() => dismissKeyboard()}>
         <View style={styles.container}>
@@ -47,26 +47,28 @@ export default class Login extends Component {
             <TextInput
               style={styles.textinput}
               onChangeText={(text) => this.setState({email: text})}
+              value={this.state.email}
               placeholder={"Email Address"}
               keyboardType='email-address'
             />
             <TextInput
               style={styles.textinput}
               onChangeText={(text) => this.setState({password: text})}
+              value={this.state.password}
               secureTextEntry={true}
               placeholder={"Password"}
             />
 
             <Button
               text="Login"
-              onpress={this.login.bind(this)}
+              onPress={this.login.bind(this)}
               button_styles={styles.primary_button}
               button_text_styles={styles.primary_button_text}
             />
 
             <Button
               text="New here?"
-              onpress={this.goToSignup.bind(this)}
+              onPress={this.goToSignup.bind(this)}
               button_styles={styles.transparent_button}
               button_text_styles={styles.transparent_button_text}
             />
@@ -89,8 +91,8 @@ export default class Login extends Component {
       (error) => {
         this.setState({password: ''});
         alert(error);
+        this.setState({loaded: true});
       }
     );
-    this.setState({loaded: true});
   }
 }

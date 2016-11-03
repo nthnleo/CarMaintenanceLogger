@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
   transparent_button: {
     marginTop: 10,
-    padding: 15
+    padding: 0
   },
   transparent_button_text: {
     color: '#0485A9',

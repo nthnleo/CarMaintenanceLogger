@@ -10,7 +10,7 @@ import Button from '../components/button';
 import Header from '../components/header';
 
 import Login from './login';
-import Account from './account';
+import Records from './records';
 
 import * as firebase from 'firebase';
 
@@ -36,24 +36,26 @@ export default class Signup extends Component {
             <TextInput
               style={styles.textinput}
               onChangeText={(text) => this.setState({email: text})}
+              value={this.state.email}
               placeholder={"Email Address"}
               keyboardType='email-address'
             />
             <TextInput
               style={styles.textinput}
               onChangeText={(text) => this.setState({password: text})}
+              value={this.state.password}
               placeholder={"Password"}
               secureTextEntry={true}
             />
             <Button
               text="Sign Up"
-              onpress={this.signup.bind(this)}
+              onPress={this.signup.bind(this)}
               button_styles={styles.primary_button}
               button_text_styles={styles.primary_button_text} />
 
             <Button
               text="Got an Account?"
-              onpress={this.goToLogin.bind(this)}
+              onPress={this.goToLogin.bind(this)}
               button_styles={styles.transparent_button}
               button_text_styles={styles.transparent_button_text} />
           </View>
@@ -68,7 +70,7 @@ export default class Signup extends Component {
     });
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(
       (user_data) => {
-        this.props.navigator.push({component: Account});
+        this.props.navigator.push({component: Records});
       },
       (error) => {
         alert(error);

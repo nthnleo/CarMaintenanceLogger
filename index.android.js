@@ -11,7 +11,7 @@ import Button from './app/components/button';
 import Header from './app/components/header';
 
 import Login from './app/pages/login';
-import Account from './app/pages/account';
+import Records from './app/pages/records';
 
 import * as firebase from 'firebase';
 const config = {
@@ -30,8 +30,7 @@ class CarMaintenanceLogger extends Component {
   constructor(props){
     super(props);
     this.state = {
-      component: Login,
-      loaded: false
+      component: Login
     };
   }
 
@@ -41,13 +40,13 @@ class CarMaintenanceLogger extends Component {
       return (
         <Navigator
           initialRoute={{component: this.state.component}}
-          configureScene={() => {
+          configureScene={(route, routeStack) => {
             return Navigator.SceneConfigs.FloatFromRight;
           }}
           renderScene={(route, navigator) => {
-            if (route.component) {
-              return React.createElement(route.component, { navigator });
-            }
+              return (
+                <route.component navigator={navigator}/>
+              );
           }}
         />
       );
